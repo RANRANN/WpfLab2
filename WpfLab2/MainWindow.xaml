@@ -5,40 +5,73 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfLab2"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="500">
+        Title="Калькулятор" Height="Auto" Width="250" MinHeight="350" MinWidth="250" WindowStartupLocation="CenterOwner" Icon="/calculator.jpg" Closing="Window_Closing" >
+    <Window.CommandBindings>
+        <CommandBinding Command="local:MyCommands.Normal" Executed="NormalExecuted"/>
+        <CommandBinding Command="local:MyCommands.Ing" Executed="IngExecuted"/>
+        <CommandBinding Command="Close" Executed="ExitExecuted"/>
+        <CommandBinding Command="Help" Executed="HelpExecuted"/>
+        <CommandBinding Command="local:MyCommands.Contacts" Executed="ContactsExecuted"/>
+    </Window.CommandBindings>
     <Grid >
         <Grid.RowDefinitions>
-            <RowDefinition Height="100" />
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="80" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <TextBlock  Grid.Row="0" Text="12345" FontSize="36" Margin="2,2,2,2" TextAlignment="Right" Background="#FFC1DBDE" RenderTransformOrigin="0.5,0.5"/>
-        <UniformGrid  Grid.Row="1" Rows="6" Columns="4" Margin="0,0,2,0" Height="Auto">
-            <Button Background="Gray" Content="%" FontSize="20" Margin="1,1,1,1"/>
-            <Button Background="Gray" Content="CE" FontSize="20" Margin="1,1,1,1" />
-            <Button Background="Gray" Content="C" FontSize="20" Margin="1,1,1,1"  />
-            <Button Background="Gray" Content="←" FontSize="36" Margin="1,1,1,1" />
-            <Button Background="Gray" Content="1/ꭕ" FontSize="20" Margin="1,1,1,1" />
-            <Button Background="Gray" Content="ꭕ²" FontSize="20" Margin="1,1,1,1" />
-            <Button Background="Gray" Content="√ꭕ" FontSize="20" Margin="1,1,1,1" />
-            <Button Background="Gray" Content="÷" FontSize="20" Margin="1,1,1,1" />
-            <Button Background="#FFDCDBDB" Content="7" FontSize="20" Margin="1,1,1,1" />
-            <Button Background="#FFDCDBDB" Content="8" FontSize="20" Margin="1,1,1,1" />
-            <Button Background="#FFDCDBDB" Content="9" FontSize="20" Margin="1,1,1,1" />
-            <Button Background="Gray" Content="x" FontSize="20" Margin="1,1,1,1" />
-            <Button Background="#FFDCDBDB" Content="4" FontSize="20" Margin="1,1,1,1" />
-            <Button Background="#FFDCDBDB" Content="5" FontSize="20" Margin="1,1,1,1" />
-            <Button Background="#FFDCDBDB" Content="6" FontSize="20" Margin="1,1,1,1" />
-            <Button Background="Gray" Content="-" FontSize="20" Margin="1,1,1,1" />
-            <Button Background="#FFDCDBDB" Content="1" FontSize="20" Margin="1,1,1,1" />
-            <Button Background="#FFDCDBDB" Content="2" FontSize="20" Margin="1,1,1,1" />
-            <Button Background="#FFDCDBDB" Content="3" FontSize="20" Margin="1,1,1,1" />
-            <Button Background="Gray" Content="+" FontSize="20" Margin="1,1,1,1" />
-            <Button Background="#FFDCDBDB" Content="+/-" FontSize="20" Margin="1,1,1,1" />
-            <Button Background="#FFDCDBDB" Content="0" FontSize="20" Margin="1,1,1,1" />
-            <Button Background="#FFDCDBDB" Content="." FontSize="20" Margin="1,1,1,1" />
-            <Button Background="Gray" Content="=" FontSize="20" Margin="1,1,1,1" />
+        <Menu >
+            <MenuItem Header="_Вид">
+                <MenuItem Header="_Обычный" Command="local:MyCommands.Normal"/>
+                <MenuItem Header="_Инженерный" Command="local:MyCommands.Ing" />
+                <MenuItem Header="_Журнал"/>
+                <Separator/>
+                <MenuItem Header="_Выход" Command="Close"/>
+            </MenuItem>
+            <MenuItem Header="_Правка">
+                <MenuItem Header="_Копировать" Command="Copy"/>
+                <MenuItem Header="_Вставить" Command="Paste"/>
+            </MenuItem>
+            <MenuItem Header="_Справка" >
+                <MenuItem Header="_Помощь" Command="local:MyCommands.Help"/>
+                <MenuItem Header="_Контакты" Command="local:MyCommands.Contacts"/>
+            </MenuItem>
+        </Menu>
+
+        <TextBlock  Grid.Row="1" Text="" FontSize="36" Margin="2,2,2,2" Padding="2" TextAlignment="Right" RenderTransformOrigin="0.5,0.5" x:Name="textLabel">
+            <TextBlock.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFC1DBDE"/>
+                    <GradientStop Color="White" Offset="1"/>
+                </LinearGradientBrush>
+            </TextBlock.Background>
+        </TextBlock>
+        <UniformGrid  Grid.Row="2" Rows="6" Columns="4" Margin="2,2,2,2" Height="Auto" x:Name="MainRoot">
+            <Button Content="%" Style="{DynamicResource ComputingButtons}"/>
+            <Button Content="CE" Style="{DynamicResource ComputingButtons}"/>
+            <Button Content="C" Style="{DynamicResource ComputingButtons}"/>
+            <Button Content="←" Style="{DynamicResource ComputingButtons}"/>
+            <Button Content="1/ꭕ" Style="{DynamicResource ComputingButtons}"/>
+            <Button Content="ꭕ²" Style="{DynamicResource ComputingButtons}"/>
+            <Button Content="√ꭕ" Style="{DynamicResource ComputingButtons}"/>
+            <Button Content="÷" Style="{DynamicResource ComputingButtons}"/>
+            <Button Content="7" Style="{DynamicResource NumberedButtons}"/>
+            <Button Content="8" Style="{DynamicResource NumberedButtons}"/>
+            <Button Content="9" Style="{DynamicResource NumberedButtons}"/>
+            <Button Content="*" Style="{DynamicResource ComputingButtons}"/>
+            <Button Content="4" Style="{DynamicResource NumberedButtons}"/>
+            <Button Content="5" Style="{DynamicResource NumberedButtons}"/>
+            <Button Content="6" Style="{DynamicResource NumberedButtons}"/>
+            <Button Content="-" Style="{DynamicResource ComputingButtons}"/>
+            <Button Content="1" Style="{DynamicResource NumberedButtons}"/>
+            <Button Content="2" Style="{DynamicResource NumberedButtons}"/>
+            <Button Content="3" Style="{DynamicResource NumberedButtons}"/>
+            <Button Content="+" Style="{DynamicResource ComputingButtons}"/>
+            <Button Content="+/-" FontSize="20" Margin="1,1,1,1" Style="{DynamicResource NumberedButtons}"/>
+            <Button Content="0" Style="{DynamicResource NumberedButtons}"/>
+            <Button Content="." Style="{DynamicResource NumberedButtons}"/>
+            <Button Background="{StaticResource color}" Content="=" FontSize="20" Margin="1,1,1,1" />
         </UniformGrid>
-        <Border BorderThickness="5,5,1,1" Margin="2,2,2,2" Padding="2,2,2,2" CornerRadius="1,1,1,1">
+        <Border Grid.Row="1" BorderThickness="5,5,2,2" Margin="2,2,2,2" Padding="3,3,3,3" CornerRadius="1,1,1,1">
             <Border.Effect>
                 <BlurEffect/>
             </Border.Effect>
@@ -48,11 +81,6 @@
                     <GradientStop Color="#FFC1DBDE" Offset="1"/>
                 </LinearGradientBrush>
             </Border.BorderBrush>
-        </Border>
-        <Border BorderBrush ="Gray" BorderThickness="1,1,5,5" Grid.Row="2" CornerRadius="2,2,2,2" Margin="1" >
-            <Border.Effect>
-                <BlurEffect/>
-            </Border.Effect>
         </Border>
     </Grid>
 </Window>
